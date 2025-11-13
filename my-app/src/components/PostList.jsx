@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Input, Select, List, Row, Col, Checkbox, Empty, Spin, Space } from 'antd';
+import { Input, Select, List, Checkbox, Empty, Spin } from 'antd';
 import PostItem from './PostItem';
 import CreatePostForm from './CreatePostForm';
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostList from './components/PostList';
-import CreatePostForm from './components/CreatePostForm';
 
 // For local development we proxy API requests through CRA dev server (see package.json "proxy").
 // Use a relative path so the dev server proxy is used. In production build, replace with the real URL or configure env vars.
