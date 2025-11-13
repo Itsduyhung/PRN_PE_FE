@@ -22,7 +22,7 @@ function App() {
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
-      alert("Không thể tải danh sách bài viết từ API.");
+      alert("Failed to load movies from API.");
       setPosts([]); // Đặt rỗng nếu lỗi
     } finally {
       setLoading(false);
@@ -57,7 +57,7 @@ function App() {
     <div style={{ background: '#ffffff', minHeight: '100vh', padding: 24, display: 'flex', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 1100 }}>
         <h1 style={{ textAlign: 'center', color: '#6666FF', fontSize: 28, fontWeight: 700, marginBottom: 24 }}>
-          Ứng dụng Quản lý Bài viết
+          Movie Management
         </h1>
 
         <PostList 

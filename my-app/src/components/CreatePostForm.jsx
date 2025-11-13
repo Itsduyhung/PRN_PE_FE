@@ -33,6 +33,9 @@ const CreatePostForm = ({ API_URL, onCreateSuccess }) => {
     const formData = new FormData();
     formData.append('Name', values.Name);
     formData.append('Description', values.Description);
+    if (values.Rating !== undefined && values.Rating !== null) {
+      formData.append('Rating', values.Rating);
+    }
     if (selectedFile) {
       console.log('Appending file:', selectedFile);
       formData.append('ImageFile', selectedFile);
@@ -42,12 +45,12 @@ const CreatePostForm = ({ API_URL, onCreateSuccess }) => {
     try {
       setSubmitting(true);
       await axios.post(API_URL, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      message.success('Thêm bài viết thành công');
+      message.success('Movie added successfully');
       onCreateSuccess();
       close();
     } catch (err) {
       console.error('Error creating post:', err);
-      message.error('Thêm bài viết thất bại. Vui lòng kiểm tra API.');
+      message.error('Failed to add movie. Please check API.');
     } finally {
       setSubmitting(false);
     }
@@ -61,24 +64,34 @@ const CreatePostForm = ({ API_URL, onCreateSuccess }) => {
         icon={<PlusOutlined />}
         style={{ background: '#6666FF', borderColor: '#6666FF' }}
       >
-        Add Post
+        Add Movie
       </Button>
 
-      <Modal title="Thêm bài viết mới" open={visible} onCancel={close} footer={null} destroyOnClose>
+      <Modal title="Add New Movie" open={visible} onCancel={close} footer={null} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item name="Name" label="Tên" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
-            <Input placeholder="Tên bài viết" />
+          <Form.Item name="Name" label="Title (Required)" rules={[{ required: true, message: 'Please enter title' }]}>
+            <Input placeholder="Movie title" />
           </Form.Item>
 
           <Form.Item
             name="Description"
-            label="Mô tả"
-            rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
+            label="Genre (Optional)"
           >
-            <Input.TextArea rows={4} placeholder="Mô tả ngắn" />
+            <Input placeholder="Movie genre" />
           </Form.Item>
 
-          <Form.Item label="Hình ảnh (tùy chọn)">
+          <Form.Item 
+            name="Rating" 
+            label="Rating (Optional, 1-5)"
+            normalize={(value) => value ? Number(value) : undefined}
+            rules={[
+              { type: 'number', min: 1, max: 5, message: 'Rating must be between 1 and 5' }
+            ]}
+          >
+            <Input type="number" min={1} max={5} placeholder="Rating (1-5)" />
+          </Form.Item>
+
+          <Form.Item label="Poster Image (Optional)">
             <Upload
               beforeUpload={beforeUpload}
               onRemove={onRemove}
@@ -86,7 +99,7 @@ const CreatePostForm = ({ API_URL, onCreateSuccess }) => {
               accept="image/*"
               listType="text"
             >
-              <Button icon={<UploadOutlined />}>Chọn file</Button>
+              <Button icon={<UploadOutlined />}>Choose file</Button>
             </Upload>
           </Form.Item>
 
@@ -98,7 +111,7 @@ const CreatePostForm = ({ API_URL, onCreateSuccess }) => {
               block
               style={{ background: '#6666FF', borderColor: '#6666FF' }}
             >
-              Tạo Bài viết
+              Create Movie
             </Button>
           </Form.Item>
         </Form>

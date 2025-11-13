@@ -27,28 +27,28 @@ const PostList = ({ posts = [], loading, searchTerm, setSearchTerm, sortOrder, s
     return result;
   }, [posts, searchTerm, onlyWithImage, sortOrder]);
 
-  if (loading) return <Spin tip="Đang tải danh sách..." />;
+  if (loading) return <Spin tip="Loading movies..." />;
 
   return (
     <div style={{ padding: 16, background: '#fff', borderRadius: 6 }}>
-      <h2 style={{ color: '#6666FF', marginBottom: 16, textAlign: 'center' }}>Danh sách Bài viết ({filtered.length})</h2>
+      <h2 style={{ color: '#6666FF', marginBottom: 16, textAlign: 'center' }}>Movies List ({filtered.length})</h2>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
         <div style={{ flex: '1 1 65%' }}>
-          <Search style={{ width: '100%' }} placeholder="Tìm kiếm theo tên..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} allowClear />
+          <Search style={{ width: '100%' }} placeholder="Search by name..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} allowClear />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Select value={sortOrder} onChange={v => setSortOrder(v)} style={{ width: 160 }}>
-            <Select.Option value="asc">Sắp xếp: A - Z</Select.Option>
-            <Select.Option value="desc">Sắp xếp: Z - A</Select.Option>
+            <Select.Option value="asc">Sort: A - Z</Select.Option>
+            <Select.Option value="desc">Sort: Z - A</Select.Option>
           </Select>
-          <Checkbox checked={onlyWithImage} onChange={e => setOnlyWithImage(e.target.checked)}>Chỉ có ảnh</Checkbox>
+          <Checkbox checked={onlyWithImage} onChange={e => setOnlyWithImage(e.target.checked)}>Picture Only</Checkbox>
           <CreatePostForm API_URL={API_URL} onCreateSuccess={onCrudSuccess} />
         </div>
       </div>
 
       {filtered.length === 0 ? (
-        <Empty description="Không tìm thấy bài viết" />
+        <Empty description="No movies found" />
       ) : (
         <List
           grid={{ gutter: 16, column: 2 }}
